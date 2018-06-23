@@ -53,9 +53,10 @@ app.on('activate', function () {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
 ipcMain.on('MSG', (event, arg) => { 
+    console.log("got MSG", event, arg);
     // Send the request to game engine to get relevant data.
     var received = engine.msgReceived(arg); 
-    
+
     // Send back the answer.
     mainWindow.webContents.send("GSO", received);
 });

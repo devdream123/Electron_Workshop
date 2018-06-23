@@ -250,7 +250,7 @@ test("The turn is over, count points, player 2 was active", () =>{
 				},
 				{
 					"active": true,
-					"dealt":[],
+					"dealt": ["dice2", "dice3"],
 					"thrown": [],
 					"table" : [
 						{"name":"dice1", "side": "cabbage"},
@@ -262,6 +262,7 @@ test("The turn is over, count points, player 2 was active", () =>{
 	)
 	var gso1 = engine.msgReceived("Change");
 	expect(gso1.players[1].score).toEqual(4);
+	expect(gso1.players[1].dealt).toEqual([]);
 	expect(gso1.players[1].active).toEqual(false);
 	expect(gso1.players[0].active).toEqual(true);
 	expect(gso1.state).toEqual("TURNSTART");

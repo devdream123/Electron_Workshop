@@ -116,6 +116,7 @@ function changePlayer(){
     if(realScore>0){
         activePlayer().score += realScore;
     }
+    activePlayer().dealt = [];
     // change player
     gso.players[0].active = !gso.players[0].active;
     gso.players[1].active = !gso.players[1].active;
