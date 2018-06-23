@@ -1,4 +1,6 @@
 import React from 'react';
+import playerActive from './images/ava_active.png';
+import playerInActive from './images/ava_inactive.png';
 
 const Buttons = (props) => {
 	switch(props.state){
@@ -20,8 +22,9 @@ const Buttons = (props) => {
 
 const Player = (props) => (
 	<div className="Player">
-		<textarea cols={20} rows={20} value={JSON.stringify(props.data)} />
+		{props.data.active ? <img src={playerActive}/> :  <img src={playerInActive}/> }
 		{props.data.active ? <Buttons state={props.state} send={props.send} /> : null}
+				<textarea cols={20} rows={20} value={JSON.stringify(props.data)} />
 	</div>
 );
 

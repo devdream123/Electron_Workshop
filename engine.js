@@ -1,6 +1,6 @@
 // Require the gso template and the dices to throw
-const dice =  require("./data/dice.json");
-var gso =  require("./data/gso.json");
+const dice =  require("./src/data/dice.json");
+var gso =  require("./src/data/gso.json");
 
 /************* HELPERS ***************/
 // Helper to get random number up to given

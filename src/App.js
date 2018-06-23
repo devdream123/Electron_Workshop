@@ -31,15 +31,14 @@ class App extends Component {
             <div>
                 {/*<textarea cols={20} rows={20} value={JSON.stringify(this.state.gso)} />*/}
                 <div style={{display:"inline-block", width:"33%"}}>
-                    <h2>Player1</h2> 
+                    <h2>Player 1</h2> 
                     <Player data={this.state.gso.players[0]} state={this.state.gso.state} send={this.sendMessage}/>
                 </div>
                 <div style={{display:"inline-block", width:"33%"}}>
-                    <h2>Board</h2> 
                     <Board data={this.state.gso.board} state={this.state.gso.state}/>
                 </div>
                 <div style={{display:"inline-block", width:"33%"}}>
-                    <h2>Player2</h2> 
+                    <h2>Player 2</h2> 
                     <Player data={this.state.gso.players[1]} state={this.state.gso.state} send={this.sendMessage}/>
                 </div>
             </div>
@@ -49,11 +48,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <div className="App-intro">
+        <div>
          {this.state.gso.state==="loading" ? <i>Loading...</i> : this.renderTable()}
         </div>
         <p>
