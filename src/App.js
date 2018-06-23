@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
+import Player from './Player';
+import Board from './Board';
 import './App.css';
 
 const electron = window.require('electron');
@@ -24,6 +26,26 @@ class App extends Component {
         this.sendMessage("Init");
     }
 
+    renderTable(){
+        return  (
+            <div>
+                {/*<textarea cols={20} rows={20} value={JSON.stringify(this.state.gso)} />*/}
+                <div style={{display:"inline-block", width:"33%"}}>
+                    <h2>Player1</h2> 
+                    <Player data={this.state.gso.players[0]} state={this.state.gso.state} send={this.sendMessage}/>
+                </div>
+                <div style={{display:"inline-block", width:"33%"}}>
+                    <h2>Board</h2> 
+                    <Board data={this.state.gso.board} state={this.state.gso.state}/>
+                </div>
+                <div style={{display:"inline-block", width:"33%"}}>
+                    <h2>Player2</h2> 
+                    <Player data={this.state.gso.players[1]} state={this.state.gso.state} send={this.sendMessage}/>
+                </div>
+            </div>
+        )
+    }
+
   render() {
     return (
       <div className="App">
@@ -31,9 +53,9 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React</h1>
         </header>
-        <p className="App-intro">
-          <textarea cols={20} rows={20} value={JSON.stringify(this.state.gso)} />
-        </p>
+        <div className="App-intro">
+         {this.state.gso.state==="loading" ? <i>Loading...</i> : this.renderTable()}
+        </div>
         <p>
             {["Deal","Throw", "Count", "Again", "Change"].map(x => (
                 <button onClick={() => this.sendMessage(x)} key={x}>{x}</button>    
