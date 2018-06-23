@@ -1,0 +1,67 @@
+{
+	"dice0": {
+		"name" : "dice0",
+		"color": "green",
+		"sides": ["corgi", "corgi", "corgi", "cabbage", "paws", "paws"]
+	},
+	"dice1": {
+		"name" : "dice1",
+		"color": "green",
+		"sides": ["corgi", "corgi", "corgi", "cabbage", "paws", "paws"]
+	},
+	"dice2": {
+		"name" : "dice2",
+		"color": "green",
+		"sides": ["corgi", "corgi", "corgi", "cabbage", "paws", "paws"]
+	},
+	"dice3": {
+		"name" : "dice3",
+		"color": "green",
+		"sides": ["corgi", "corgi", "corgi", "cabbage", "paws", "paws"]
+	},
+	"dice4": {
+		"name" : "dice4",
+		"color": "green",
+		"sides": ["corgi", "corgi", "corgi", "cabbage", "paws", "paws"]
+	},
+	"dice5": {
+		"name" : "dice5",
+		"color": "green",
+		"sides": ["corgi", "corgi", "corgi", "cabbage", "paws", "paws"]
+	},
+	"dice6": {
+		"name" : "dice6",
+		"color": "yellow",
+		"sides": ["corgi", "corgi", "cabbage", "cabbage", "paws", "paws"]
+	},
+	"dice7": {
+		"name" : "dice7",
+		"color": "yellow",
+		"sides": ["corgi", "corgi", "cabbage", "cabbage", "paws", "paws"]
+	},
+	"dice8": {
+		"name" : "dice8",
+		"color": "yellow",
+		"sides": ["corgi", "corgi", "cabbage", "cabbage", "paws", "paws"]
+	},
+	"dice9": {
+		"name" : "dice9",
+		"color": "yellow",
+		"sides": ["corgi", "corgi", "cabbage", "cabbage", "paws", "paws"]
+	},
+	"dice10": {
+		"name" : "dice10",
+		"color": "red",
+		"sides": ["corgi", "cabbage", "cabbage", "cabbage", "paws", "paws"]
+	},
+	"dice11": {
+		"name" : "dice11",
+		"color": "red",
+		"sides": ["corgi", "cabbage", "cabbage", "cabbage", "paws", "paws"]
+	},
+	"dice12": {
+		"name" : "dice12",
+		"color": "red",
+		"sides": ["corgi", "cabbage", "cabbage", "cabbage", "paws", "paws"]
+	}
+}

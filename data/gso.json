@@ -1,0 +1,21 @@
+{
+	"players": [
+		{
+			"active": false,
+			"dealt":[],
+			"thrown": [],
+			"table": [],
+			"score": 0
+		},
+		{
+			"active": false,
+			"dealt": [],
+			"thrown": [],
+			"table": [],
+			"score": 0
+
+		}
+
+	],
+	"state": "TURNSTART"
+}
