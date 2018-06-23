@@ -1,7 +1,7 @@
 {
 	"players": [
 		{
-			"active": false,
+			"active": true,
 			"dealt":[],
 			"thrown": [],
 			"table": [],

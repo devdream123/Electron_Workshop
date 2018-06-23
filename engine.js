@@ -61,18 +61,21 @@ function scoreTable(player){
     return score;
 }
 
+function activePlayer(){
+    return gso.players[0].active ? gso.players[0] : gso.players[1];
+}
+
 /************* GAME STATES ***************/
 // The initial state of the game
 function initGame(){
-    gso.players[0].active = true;
     return gso;
 }
 
 // Give dices to player based on his previous actions
 function getDices(){
-    var diceNeeded = 3-gso.players[0]["dealt"].length;
+    var diceNeeded = 3-activePlayer()["dealt"].length;
     for(var i=0; i<diceNeeded; i++) {
-        gso.players[0]["dealt"].push(getRandomDice(gso.players[0]));
+        activePlayer()["dealt"].push(getRandomDice(activePlayer()));
     }
 
     gso.state = "DEALT";
@@ -81,7 +84,7 @@ function getDices(){
 
 // Assign sides to dices
 function throwDices(){
-    gso.players[0] = throwRandomSides(gso.players[0]);
+    throwRandomSides(activePlayer());
     gso.state = "THROWN";
     return gso;
 }
@@ -89,7 +92,7 @@ function throwDices(){
 
 // 
 function countScore(){
-    var playerWithResults = parseThrowResults(gso.players[0]);
+    var playerWithResults = parseThrowResults(activePlayer());
     if(scoreTable(playerWithResults).cabbage >=3){
         gso.state = "TURNEND";
     } else {
@@ -108,14 +111,14 @@ function moreDice(){
 //
 function changePlayer(){
     // count score
-    var score = scoreTable(gso.players[0]);
+    var score = scoreTable(activePlayer());
     var realScore = score.corgi - score.cabbage ;
     if(realScore>0){
-        gso.players[0].score += realScore;
+        activePlayer().score += realScore;
     }
     // change player
-    gso.players[0].active = false;
-    gso.players[1].active = true;
+    gso.players[0].active = !gso.players[0].active;
+    gso.players[1].active = !gso.players[1].active;
     gso.state = "TURNSTART";
     return gso;
 }

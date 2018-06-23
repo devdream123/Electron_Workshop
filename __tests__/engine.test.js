@@ -10,10 +10,20 @@ test("Init the game: active player is set, state is TURNSTART", ()=> {
 	}
 	var gso1 = engine.msgReceived("Init");
 	expect(gso1).toMatchObject(gso);
-
 });
 
 test("Give dice - player didn't throw yet, state is DEALT", () => {
+	engine.setGSO({
+		"players": [
+			{
+				"active": true,
+				"dealt":[],
+				"thrown": [],
+				"table": [],
+			},
+			{"active": false}
+		]
+	});
 	var gso = engine.msgReceived("Deal");
 	expect(gso.state).toEqual("DEALT");
 	expect(gso.players[0]["dealt"].length).toEqual(3);
@@ -28,6 +38,7 @@ test("Give dice - player has 2 paws in hand", () =>{
 		{
 			"players": [
 				{
+					"active": true,
 					"dealt":["dice8", "dice4"],
 					"thrown": [],
 					"table" : [],
@@ -42,7 +53,29 @@ test("Give dice - player has 2 paws in hand", () =>{
 	expect(gso.players[0]["dealt"][1]).toEqual("dice4");
 	expect(gso.players[0]["dealt"][2]).not.toEqual("dice8");
 	expect(gso.players[0]["dealt"][2]).not.toEqual("dice4");
+});
 
+test("Give dice to second player - player didn't throw yet, state is DEALT", () => {
+	engine.setGSO({
+		"players": [
+			{
+				"active": false
+			},
+			{
+				"active": true,
+				"dealt":[],
+				"thrown": [],
+				"table": [],
+			}
+		]
+	});
+	var gso = engine.msgReceived("Deal");
+	expect(gso.state).toEqual("DEALT");
+	expect(gso.players[1]["dealt"].length).toEqual(3);
+	expect(gso.players[1]["thrown"].length).toEqual(0);
+	expect(gso.players[1]["dealt"][0]).not.toEqual(gso.players[1]["dealt"][1]);
+	expect(gso.players[1]["dealt"][0]).not.toEqual(gso.players[1]["dealt"][2]);
+	expect(gso.players[1]["dealt"][1]).not.toEqual(gso.players[1]["dealt"][2]);
 });
 
 
@@ -50,7 +83,8 @@ test("Throw the dices player got, set state to  THROWN", () => {
 	engine.setGSO(
 		{
 			"players": [
-				{
+				{	
+					"active": true,
 					"dealt":[ "dice8", "dice4", "dice10"],
 					"thrown": []
 				}
@@ -63,7 +97,6 @@ test("Throw the dices player got, set state to  THROWN", () => {
 	expect(gso1.players[0].thrown.length).toEqual(3);
 	expect(diceNames).toEqual([ "dice8", "dice4", "dice10"]);
 	expect(gso1.state).toEqual("THROWN");
-
 });
 
 test("Player threw 3 cabbages - his turn is over, set state to TURNEND", () => {
@@ -71,6 +104,7 @@ test("Player threw 3 cabbages - his turn is over, set state to TURNEND", () => {
 		{
 			"players": [
 				{
+					"active": true,
 					"dealt":[],
 					"thrown": [ 
 						{"name":"dice8", "side": "cabbage"},
@@ -98,6 +132,7 @@ test("Player threw 3 paws, set state to AGAIN", () => {
 		{
 			"players": [
 				{
+					"active": true,
 					"dealt":[],
 					"thrown": [ 
 						{"name":"dice8", "side": "paws"},
@@ -121,6 +156,7 @@ test("Player has 1 corgi, 1 paw and 1 cabbage, it's second cabbage, state is AGA
 		{
 			"players": [
 				{
+					"active": true,
 					"dealt":[],
 					"thrown": [ 
 						{"name":"dice8", "side": "corgi"},
@@ -150,6 +186,7 @@ test("Player has 2 corgis and 1 cabbage, it's third cabbage, state is TURNEND", 
 		{
 			"players": [
 				{
+					"active": true,
 					"dealt":[],
 					"thrown": [ 
 						{"name":"dice8", "side": "corgi"},
@@ -174,7 +211,7 @@ test("Player wants to play again, state is TURNSTART", () =>{
 	expect(gso1.state).toEqual("TURNSTART");
 });
 
-test("The turn is over, count points", () =>{
+test("The turn is over, count points, player 1 was active", () =>{
 	engine.setGSO(
 		{
 			"players": [
@@ -203,4 +240,32 @@ test("The turn is over, count points", () =>{
 	expect(gso1.players[1].active).toEqual(true);
 	expect(gso1.state).toEqual("TURNSTART");
 });
+
+test("The turn is over, count points, player 2 was active", () =>{
+	engine.setGSO(
+		{
+			"players": [
+				{
+					"active": false,
+				},
+				{
+					"active": true,
+					"dealt":[],
+					"thrown": [],
+					"table" : [
+						{"name":"dice1", "side": "cabbage"},
+					],
+					"score": 4
+				} 
+			]
+		}
+	)
+	var gso1 = engine.msgReceived("Change");
+	expect(gso1.players[1].score).toEqual(4);
+	expect(gso1.players[1].active).toEqual(false);
+	expect(gso1.players[0].active).toEqual(true);
+	expect(gso1.state).toEqual("TURNSTART");
+});
+
+
 
