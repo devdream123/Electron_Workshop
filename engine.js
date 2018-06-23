@@ -9,60 +9,56 @@ function getRandomUpTo(n){
 }
 
 // Helper to make sure we get random dices
-function getRandomDice(player){
+function getRandomDice(board){
     var newDice;
     do {
         var diceIndex = getRandomUpTo(12);
         newDice = dice["dice"+diceIndex]["name"];
-    } while(player.dealt.indexOf(newDice) != -1 || 
-            player.table.map(x => x.name).indexOf(newDice.name) != -1);
+    } while(board.dealt.indexOf(newDice) != -1 || 
+            board.hand.map(x => x.name).indexOf(newDice.name) != -1);
 
     return newDice;
 }
 
 
 // Helper to throw 1 of 6 sides of this dice
-function throwRandomSides(player){
-    player.dealt.forEach(function(diceName){
+function throwRandomSides(board){
+    board.dealt.forEach(function(diceName){
         var playersDice = dice[diceName];
         var result = {name: playersDice["name"], side : playersDice.sides[getRandomUpTo(5)]};
-        player.thrown.push(result);
+        board.thrown.push(result);
     });
-    player.dealt = [];
-    return player;
+    board.dealt = [];
+    return board;
 }
 
 
 // Check and count the results
-function parseThrowResults(player){
-    player.thrown.forEach(function(playersDice){
+function parseThrowResults(board){
+    board.thrown.forEach(function(playersDice){
         if(playersDice.side=="paws"){
-           player.dealt.push(playersDice.name);
+            board.dealt.push(playersDice.name);
         } else {
-            player.table.push(playersDice);
+            board.hand.push(playersDice);
         }
     });
 
-    player.thrown = [];
-    return player;
+    board.thrown = [];
+    return board;
 }
 
 // Check the number of points for cabbages and corgis
-function scoreTable(player){
+function scoreTable(board){
     var score = {
         "corgi" : 0,
         "cabbage" : 0
     }
 
-    player.table.forEach(function(playerDice){
+    board.hand.forEach(function(playerDice){
         score[playerDice.side] += 1;
     });
 
     return score;
-}
-
-function activePlayer(){
-    return gso.players[0].active ? gso.players[0] : gso.players[1];
 }
 
 /************* GAME STATES ***************/
@@ -73,9 +69,9 @@ function initGame(){
 
 // Give dices to player based on his previous actions
 function getDices(){
-    var diceNeeded = 3-activePlayer()["dealt"].length;
+    var diceNeeded = 3-gso.board["dealt"].length;
     for(var i=0; i<diceNeeded; i++) {
-        activePlayer()["dealt"].push(getRandomDice(activePlayer()));
+        gso.board["dealt"].push(getRandomDice(gso.board));
     }
 
     gso.state = "DEALT";
@@ -84,7 +80,7 @@ function getDices(){
 
 // Assign sides to dices
 function throwDices(){
-    throwRandomSides(activePlayer());
+    throwRandomSides(gso.board);
     gso.state = "THROWN";
     return gso;
 }
@@ -92,7 +88,7 @@ function throwDices(){
 
 // 
 function countScore(){
-    var playerWithResults = parseThrowResults(activePlayer());
+    var playerWithResults = parseThrowResults(gso.board);
     if(scoreTable(playerWithResults).cabbage >=3){
         gso.state = "TURNEND";
     } else {
@@ -108,15 +104,22 @@ function moreDice(){
     return gso;
 }
 
+
 //
 function changePlayer(){
     // count score
-    var score = scoreTable(activePlayer());
+    var score = scoreTable(gso.board);
     var realScore = score.corgi - score.cabbage ;
+
+    const activePlayer = gso.players[0].active ? gso.players[0] : gso.players[1];
     if(realScore>0){
-        activePlayer().score += realScore;
+        activePlayer.score += realScore;
     }
-    activePlayer().dealt = [];
+
+    // reset board
+    gso.board.dealt = [];
+    gso.board.thrown = [];
+    gso.board.hand = [];
     // change player
     gso.players[0].active = !gso.players[0].active;
     gso.players[1].active = !gso.players[1].active;
