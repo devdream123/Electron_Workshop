@@ -1,28 +1,56 @@
 .App {
   text-align: center;
+  width: 100%;
+  height: 100%;
+  vertical-align:top;
+  font-family: 'Spirax', cursive;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.Table{
+  width: 100%;
+  height: 100%;
+  display: flex;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+.Column{
+  flex: 1 1;
 }
 
-.App-title {
-  font-size: 1.5em;
+Button{
+  color: #ffffff;
+  font-size: 20px;
+  background: #ff6f00;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+  margin-right: 10px;
+  margin-left: 10px;
 }
 
-.App-intro {
-  font-size: large;
+Button:hover {
+  background: #fc3c3c;
+  text-decoration: none;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+h2.Active{
+  color: red;
+}
+
+.Dice{
+   width: 200px; 
+   height: 100px; 
+   margin: 1em;
+   border: 1px solid grey;
+}
+
+.Score{
+  margin-bottom: 1em;
+}
+
+.Score div{
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.DiceIcon{
+  display: inline-block;
 }

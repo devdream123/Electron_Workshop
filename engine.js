@@ -3,6 +3,7 @@ const dice =  require("./src/data/dice.json");
 var gso =  require("./src/data/gso.json");
 
 /************* HELPERS ***************/
+
 // Helper to get random number up to given
 function getRandomUpTo(n){
     return Math.round((Math.random() * n));
@@ -61,6 +62,7 @@ function scoreTable(board){
     return score;
 }
 
+
 /************* GAME STATES ***************/
 // The initial state of the game
 function initGame(){
@@ -86,7 +88,7 @@ function throwDices(){
 }
 
 
-// 
+// Count the score and change the state based on it
 function countScore(){
     var playerWithResults = parseThrowResults(gso.board);
     if(scoreTable(playerWithResults).cabbage >=3){
@@ -98,14 +100,14 @@ function countScore(){
     return gso;
 }
 
-//
+// Change the game state to Turnstart if the uplayer wants to continue
 function moreDice(){
     gso.state = "TURNSTART";
     return gso;
 }
 
 
-//
+// Change the played at the end of the turn, clean up the board
 function changePlayer(){
     // count score
     var score = scoreTable(gso.board);
@@ -127,7 +129,7 @@ function changePlayer(){
     return gso;
 }
 
-//
+// Parsing the message we get fron frontend to engint through Main
 function msgReceived(arg){  
     switch(arg){
         case "Init":
@@ -150,6 +152,9 @@ function msgReceived(arg){
 function setGSO(changedGSO){
     gso = changedGSO;
 }
+
+
+/************* Exports ***************/
 
 exports.msgReceived = msgReceived;
 exports.setGSO = setGSO;

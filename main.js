@@ -10,7 +10,7 @@ const engine = require('./engine.js');
 
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 600, height: 600})
+  mainWindow = new BrowserWindow({width: 700, height: 600})
 
   // and load the index.html of the app.
   mainWindow.loadURL('http://localhost:3000/')

@@ -1,4 +1,6 @@
 import React from 'react';
+
+// Import images for dices and score
 import dice from './data/dice.json'
 import corgi from './images/corgi.png';
 import cabbage from './images/cabbage.png';
@@ -6,14 +8,12 @@ import paws from './images/paws.png';
 import corgiIcon from './images/corgiIcon.png';
 import cabbageIcon from './images/cabbageIcon.png';
 
-const Dice = (props) => (
-	<div style={{backgroundColor: props.color, width:"200px", height: "100px", margin: "1em"}}>
-		{props.side=="corgi" ? <img src={corgi}/> : null}
-		{props.side=="cabbage" ? <img src={cabbage}/> : null}
-		{props.side=="paws" ? <img src={paws}/> : null}
-	</div>
-)
 
+// Connect css file
+import './App.css';
+
+
+// Separate function to render our dice before they have sides. Uses Dice component.
 function renderEmptyDice(dealt){
 	return (
 		<div>
@@ -25,6 +25,7 @@ function renderEmptyDice(dealt){
 	)
 }
 
+// Separate function to render our dice with sides. Uses Dice component.
 function renderFilledDice(thrown){
 	return (
 		<div>
@@ -36,17 +37,29 @@ function renderFilledDice(thrown){
 	)
 }
 
+
+// Separate function to render the results for the player within a turn.
 function renderCurrentResult(hand){
 	return (
 		<div>
 			<h2>Turn Results</h2>
 			{
-				hand.map(x => <div key={x.name}> <img src={x.side=="corgi" ? corgiIcon : cabbageIcon}/> </div>)
+				hand.map(x => <div key={x.name} className="DiceIcon"> <img src={x.side=="corgi" ? corgiIcon : cabbageIcon}/> </div>)
 			}
 		</div>
 	)
 }
 
+// Component for Dice
+const Dice = (props) => (
+	<div className="Dice" style={{backgroundColor: props.color}}>
+		{props.side=="corgi" ? <img src={corgi}/> : null}
+		{props.side=="cabbage" ? <img src={cabbage}/> : null}
+		{props.side=="paws" ? <img src={paws}/> : null}
+	</div>
+)
+
+// Component that analyses the state and calls relevat function to display the elements.
 const DiceElement = (props) => {
 	switch(props.state){
 		case "DEALT":
@@ -60,10 +73,10 @@ const DiceElement = (props) => {
 	}
 }
 
-
+// Main component of the board.
 const Board = (props) => (
 	<div className="Board">
-		{props.state != "TURNSTART" ? <DiceElement state={props.state} data={props.data}/> :  null}
+		{props.state != "TURNSTART" ? <DiceElement state={props.state} data={props.data}/> :  <p>Get corgis, avoid cabbages!</p>}
 	</div>
 );
 
