@@ -1,4 +1,4 @@
-// Require the gso template and the dices to throw
+// Require the gso template and the dice to throw
 const dice =  require("./src/data/dice.json");
 var gso =  require("./src/data/gso.json");
 
@@ -9,7 +9,7 @@ function getRandomUpTo(n){
     return Math.round((Math.random() * n));
 }
 
-// Helper to make sure we get random dices
+// Helper to make sure we get random dice
 function getRandomDice(board){
     var newDice;
     do {
@@ -64,9 +64,68 @@ function scoreTable(board){
 
 
 /************* GAME STATES ***************/
+// The initial state of the game
+function initGame(){
+    return gso;
+}
 
+// Give dice to player based on his previous actions
+function getDice(){
+    var diceNeeded = 3-gso.board["dealt"].length;
+    for(var i=0; i<diceNeeded; i++) {
+        gso.board["dealt"].push(getRandomDice(gso.board));
+    }
 
+    gso.state = "DEALT";
+    return gso;
+}
 
+// Assign sides to dice
+function throwDice(){
+    throwRandomSides(gso.board);
+    gso.state = "THROWN";
+    return gso;
+}
+
+// Count the score and change the state based on it
+function countScore(){
+    var playerWithResults = parseThrowResults(gso.board);
+    if(scoreTable(playerWithResults).cabbage >=3){
+        gso.state = "TURNEND";
+    } else {
+        gso.state = "AGAIN";
+    }
+
+    return gso;
+}
+
+// Change the game state to Turnstart if the uplayer wants to continue
+function moreDice(){
+    gso.state = "TURNSTART";
+    return gso;
+}
+
+// Change the played at the end of the turn, clean up the board
+function changePlayer(){
+    // count score
+    var score = scoreTable(gso.board);
+    var realScore = score.corgi - score.cabbage ;
+
+    const activePlayer = gso.players[0].active ? gso.players[0] : gso.players[1];
+    if(realScore>0){
+        activePlayer.score += realScore;
+    }
+
+    // reset board
+    gso.board.dealt = [];
+    gso.board.thrown = [];
+    gso.board.hand = [];
+    // change player
+    gso.players[0].active = !gso.players[0].active;
+    gso.players[1].active = !gso.players[1].active;
+    gso.state = "TURNSTART";
+    return gso;
+}
 
 
 
@@ -77,9 +136,9 @@ function msgReceived(arg){
         case "Init":
             return initGame(); // GSO state: ANY
         case "Deal":
-            return getDices(); // GSO state: DEALT
+            return getDice(); // GSO state: DEALT
         case "Throw":
-            return throwDices(); // GSO state: THROWN
+            return throwDice(); // GSO state: THROWN
         case "Count":
             return countScore(); // GSO state: TURNEND or AGAIN
         case "Again":

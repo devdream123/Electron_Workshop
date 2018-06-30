@@ -58,7 +58,7 @@ class App extends Component {
         return (
           <div className="App">
             <div>
-             {this.state.gso.state==="loading" ? <i>Loading...</i> : this.renderTable()}
+                {this.state.gso.state==="loading" ? <i>Loading...</i> : this.renderTable()}
             </div>
           </div>
         );

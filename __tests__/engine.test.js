@@ -1,5 +1,6 @@
 const engine = require("../engine");
 
+// TEST 1
 test("Init the game: active player is set, state is TURNSTART", ()=> {
 	var gso = {
 		"players": [
@@ -12,6 +13,8 @@ test("Init the game: active player is set, state is TURNSTART", ()=> {
 	expect(gso1).toMatchObject(gso);
 });
 
+
+// TEST 2
 test("Give dice - player didn't throw yet, state is DEALT", () => {
 	engine.setGSO({
 		"players": [
@@ -33,6 +36,9 @@ test("Give dice - player didn't throw yet, state is DEALT", () => {
 	expect(gso.board["dealt"][1]).not.toEqual(gso.board["dealt"][2]);
 });
 
+
+
+// TEST 3
 test("Give dice - player has 2 paws in hand", () =>{
 	engine.setGSO(
 		{
@@ -55,6 +61,8 @@ test("Give dice - player has 2 paws in hand", () =>{
 	expect(gso.board["dealt"][2]).not.toEqual("dice4");
 });
 
+
+// TEST 4
 test("Give dice to second player - player didn't throw yet, state is DEALT", () => {
 	engine.setGSO({
 		"players": [
@@ -77,7 +85,8 @@ test("Give dice to second player - player didn't throw yet, state is DEALT", () 
 });
 
 
-test("Throw the dices player got, set state to THROWN", () => {
+// TEST 5
+test("Throw the dice player got, set state to THROWN", () => {
 	engine.setGSO(
 		{
 			"players": [
@@ -97,6 +106,7 @@ test("Throw the dices player got, set state to THROWN", () => {
 	expect(gso.state).toEqual("THROWN");
 });
 
+// TEST 6
 test("Player threw 3 cabbages - his turn is over, set state to TURNEND", () => {
 	engine.setGSO(
 		{
@@ -125,6 +135,8 @@ test("Player threw 3 cabbages - his turn is over, set state to TURNEND", () => {
 	expect(gso.board.dealt).toEqual([]);
 });
 
+
+// TEST 7
 test("Player threw 3 paws, set state to AGAIN", () => {
 	engine.setGSO(
 		{
@@ -149,6 +161,9 @@ test("Player threw 3 paws, set state to AGAIN", () => {
 	expect(gso.board.dealt).toEqual([ "dice8", "dice4", "dice10"]);
 });
 
+
+
+// TEST 8
 test("Player has 1 corgi, 1 paw and 1 cabbage, it's second cabbage, state is AGAIN", () =>{
 	engine.setGSO(
 		{
@@ -179,6 +194,8 @@ test("Player has 1 corgi, 1 paw and 1 cabbage, it's second cabbage, state is AGA
 	expect(gso.board.thrown).toEqual([]);
 })
 
+
+// TEST 9
 test("Player has 2 corgis and 1 cabbage, it's third cabbage, state is TURNEND", () =>{
 	engine.setGSO(
 		{
@@ -203,6 +220,8 @@ test("Player has 2 corgis and 1 cabbage, it's third cabbage, state is TURNEND", 
 	expect(gso.state).toEqual("TURNEND");
 });
 
+
+// TEST 10
 test("Player wants to play again, state is TURNSTART", () =>{
 	engine.setGSO({ "state": "AGAIN" });
 	var gso = engine.msgReceived("Again");
@@ -237,6 +256,8 @@ test("The turn is over, count points, player 1 was active", () =>{
 	expect(gso.board).toMatchObject({ "dealt": [], "thrown": [], "hand": [] });
 });
 
+
+// TEST 11
 test("The turn is over, count points, player 2 was active", () =>{
 	engine.setGSO(
 		{

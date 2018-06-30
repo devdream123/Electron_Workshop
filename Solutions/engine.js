@@ -1,4 +1,4 @@
-// Require the gso template and the dices to throw
+// Require the gso template and the dice to throw
 const dice =  require("./src/data/dice.json");
 var gso =  require("./src/data/gso.json");
 
@@ -9,7 +9,7 @@ function getRandomUpTo(n){
     return Math.round((Math.random() * n));
 }
 
-// Helper to make sure we get random dices
+// Helper to make sure we get random dice
 function getRandomDice(board){
     var newDice;
     do {
@@ -69,8 +69,8 @@ function initGame(){
     return gso;
 }
 
-// Give dices to player based on his previous actions
-function getDices(){
+// Give dice to player based on his previous actions
+function getDice(){
     var diceNeeded = 3-gso.board["dealt"].length;
     for(var i=0; i<diceNeeded; i++) {
         gso.board["dealt"].push(getRandomDice(gso.board));
@@ -80,8 +80,8 @@ function getDices(){
     return gso;
 }
 
-// Assign sides to dices
-function throwDices(){
+// Assign sides to dice
+function throwDice(){
     throwRandomSides(gso.board);
     gso.state = "THROWN";
     return gso;
@@ -136,9 +136,9 @@ function msgReceived(arg){
         case "Init":
             return initGame(); // GSO state: ANY
         case "Deal":
-            return getDices(); // GSO state: DEALT
+            return getDice(); // GSO state: DEALT
         case "Throw":
-            return throwDices(); // GSO state: THROWN
+            return throwDice(); // GSO state: THROWN
         case "Count":
             return countScore(); // GSO state: TURNEND or AGAIN
         case "Again":
