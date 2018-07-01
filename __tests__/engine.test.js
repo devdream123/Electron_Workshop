@@ -39,7 +39,7 @@ test("Give dice - player didn't throw yet, state is DEALT", () => {
 
 
 // TEST 3
-test("Give dice - player has 2 paws in hand", () =>{
+test("Give dice - player has 2 paws", () =>{
 	engine.setGSO(
 		{
 			"players": [
