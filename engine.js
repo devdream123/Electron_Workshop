@@ -69,6 +69,7 @@ function scoreTable(board){
 
 // Give dice to player based on his previous actions
 
+
 // Assign sides to dice
 
 
@@ -78,7 +79,7 @@ function scoreTable(board){
 // Change the game state to Turnstart if the uplayer wants to continue
 
 
-// Change the played at the end of the turn, clean up the board
+// Change the player at the end of the turn, clean up the board
 
 
 

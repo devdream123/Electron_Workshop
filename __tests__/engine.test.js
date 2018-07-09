@@ -228,6 +228,7 @@ test("Player wants to play again, state is TURNSTART", () =>{
 	expect(gso.state).toEqual("TURNSTART");
 });
 
+// TEST 11
 test("The turn is over, count points, player 1 was active", () =>{
 	engine.setGSO(
 		{
@@ -257,7 +258,7 @@ test("The turn is over, count points, player 1 was active", () =>{
 });
 
 
-// TEST 11
+// TEST 12
 test("The turn is over, count points, player 2 was active", () =>{
 	engine.setGSO(
 		{
